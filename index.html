@@ -91,6 +91,7 @@
   .avatar{width:130px;height:130px;border-radius:50%;margin:0 auto 18px;display:grid;place-items:center;position:relative;
     background:conic-gradient(from 210deg,var(--accent),var(--accent-2),var(--accent-3),var(--accent));font-family:'Sora';font-weight:800;font-size:2.4rem;color:#06121a}
   .avatar span{position:absolute;inset:5px;border-radius:50%;background:var(--bg-soft);display:grid;place-items:center;color:var(--text)}
+  .avatar img{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);border-radius:50%;object-fit:cover;object-position:center 22%;z-index:1}
   .avatar-card h3{font-size:1.15rem}
   .avatar-card .loc{color:var(--muted);font-size:13.5px;margin-top:4px}
   .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px;position:relative}
@@ -255,13 +256,12 @@
       </div>
     </div>
     <div class="avatar-card reveal">
-      <div class="avatar"><span>EA</span></div>
+      <div class="avatar"><img src="assets/profile.jpg" alt="Egi Agung Santoso Pardede" onerror="this.remove()" /><span>EA</span></div>
       <h3>Egi Agung Santoso Pardede</h3>
       <p class="loc">📍 Bandung, Indonesia</p>
       <div class="chips">
         <span class="chip">IT Governance</span>
         <span class="chip">System Analysis</span>
-        <span class="chip">COBIT 2019</span>
         <span class="chip">Project Mgmt</span>
         <span class="chip">Cloud</span>
       </div>
@@ -284,7 +284,7 @@
         <p>Di luar akademik, saya aktif berorganisasi, dinobatkan sebagai <b>Best Staff</b> di Laboratorium SAG, serta meraih berbagai kejuaraan business plan &amp; business case tingkat nasional.</p>
       </div>
       <div class="focus-list reveal">
-        <div class="focus"><div class="ic">🛡️</div><div><b>IT Governance &amp; Audit</b><small>COBIT 2019, ISO 27001, manajemen risiko &amp; kepatuhan</small></div></div>
+        <div class="focus"><div class="ic">🛡️</div><div><b>IT Governance &amp; Audit</b><small>Tata kelola TI, manajemen risiko &amp; kepatuhan, audit sistem informasi</small></div></div>
         <div class="focus"><div class="ic">📊</div><div><b>System &amp; Process Analysis</b><small>BPMN, perbaikan alur kerja, efisiensi proses</small></div></div>
         <div class="focus"><div class="ic">☁️</div><div><b>Cloud &amp; Development</b><small>AWS, Laravel, MySQL, PHP, pengujian E2E</small></div></div>
         <div class="focus"><div class="ic">🗂️</div><div><b>Project Management</b><small>Agile, Jira, Google PM, koordinasi lintas tim</small></div></div>
@@ -404,7 +404,6 @@
       <h2>Teknologi &amp; kompetensi</h2>
     </div>
     <div class="skills-row reveal">
-      <span class="skill-pill">COBIT 2019</span>
       <span class="skill-pill">BPMN</span>
       <span class="skill-pill">System Analysis</span>
       <span class="skill-pill">IT Governance</span>
