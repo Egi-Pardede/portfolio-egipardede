@@ -191,6 +191,20 @@
   .award-featured .body{padding:14px 16px;display:flex;flex-direction:column;gap:5px;align-items:flex-start}
   .award-featured .award-link{font-size:12.5px;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:4px}
   .award-featured:hover .award-link{text-decoration:underline}
+  /* Album / Lookbook */
+  .lookbook{display:flex;gap:18px;overflow-x:auto;padding:8px 2px 22px;scroll-snap-type:x proximity}
+  .lookbook::-webkit-scrollbar{height:8px}
+  .lookbook::-webkit-scrollbar-track{background:transparent}
+  .lookbook::-webkit-scrollbar-thumb{background:var(--line);border-radius:8px}
+  .lb-card{position:relative;flex:0 0 auto;width:400px;max-width:82vw;height:250px;border-radius:20px;overflow:hidden;scroll-snap-align:start;text-decoration:none;color:#fff;border:1px solid var(--line);transition:.3s}
+  .lb-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:.6s}
+  .lb-card::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(2,8,12,.9),rgba(2,8,12,.12) 48%,transparent 72%)}
+  .lb-card:hover{transform:translateY(-6px);border-color:var(--accent-2)}
+  .lb-card:hover img{transform:scale(1.06)}
+  .lb-cap{position:absolute;left:0;right:0;bottom:0;padding:18px 20px;z-index:1}
+  .lb-cap .tag{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2)}
+  .lb-cap h3{font-family:'Sora';font-size:18px;font-weight:700;margin:5px 0 0;line-height:1.2}
+  .lb-cap .go{font-size:12.5px;color:rgba(255,255,255,.82);margin-top:7px;display:inline-flex;gap:5px}
   .cert-group{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px}
   .cert-group h4{font-size:14.5px;color:var(--accent-2);margin-bottom:10px;display:flex;align-items:center;gap:8px}
   .cert-group ul{list-style:none;display:grid;gap:7px}
@@ -233,6 +247,7 @@
   <div class="nav-inner">
     <a href="#top" class="brand"><span class="dot">EA</span> Egi Pardede</a>
     <nav class="nav-links" id="navlinks">
+      <a href="#album">Album</a>
       <a href="#about">Tentang</a>
       <a href="#experience">Pengalaman</a>
       <a href="#projects">Proyek</a>
@@ -272,6 +287,47 @@
         <span class="chip">Project Mgmt</span>
         <span class="chip">Cloud</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALBUM / LOOKBOOK -->
+<section id="album">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker">Album Proyek</div>
+      <h2>Lookbook karya &amp; lomba</h2>
+      <p>Kumpulan proyek yang saya rancang untuk berbagai kompetisi — geser untuk menjelajah.</p>
+    </div>
+    <div class="lookbook">
+      <a class="lb-card reveal" href="https://visual-muse-engine-06.lovable.app" target="_blank" rel="noopener">
+        <img src="assets/technobos.png" alt="TECHNOBOS — IoT Peternakan 4.0" />
+        <div class="lb-cap"><div class="tag">Juara 3 · AGATIS</div><h3>TECHNOBOS</h3><span class="go">IoT Peternakan 4.0 →</span></div>
+      </a>
+      <a class="lb-card reveal" href="https://echo-illustrate-kit.lovable.app" target="_blank" rel="noopener">
+        <img src="assets/bites.png" alt="Bites — Pangan Berkelanjutan" />
+        <div class="lb-cap"><div class="tag">Juara 1 · PREMINARS</div><h3>Bites</h3><span class="go">Pangan Berkelanjutan →</span></div>
+      </a>
+      <a class="lb-card reveal" href="https://wonder-work-desk.lovable.app" target="_blank" rel="noopener">
+        <img src="assets/jelantik.png" alt="Jelantik — Waste-to-Value" />
+        <div class="lb-cap"><div class="tag">Juara 2 · ERP Mini Contest</div><h3>Jelantik</h3><span class="go">Waste-to-Value →</span></div>
+      </a>
+      <a class="lb-card reveal" href="https://illustration-builder-hub.lovable.app" target="_blank" rel="noopener">
+        <img src="assets/reborn.png" alt="Reborn — E-Waste to Value" />
+        <div class="lb-cap"><div class="tag">Finalis · Marketing Days 2025</div><h3>Reborn</h3><span class="go">E-Waste to Value →</span></div>
+      </a>
+      <a class="lb-card reveal" href="https://delightful-viz-hub.lovable.app" target="_blank" rel="noopener">
+        <img src="assets/greenink.png" alt="GreenInk Jambu — Tinta Ramah Lingkungan" />
+        <div class="lb-cap"><div class="tag">Finalis · SWIS 2025</div><h3>GreenInk Jambu</h3><span class="go">Tinta Ramah Lingkungan →</span></div>
+      </a>
+      <a class="lb-card reveal" href="https://case-visualizer-solver.lovable.app" target="_blank" rel="noopener">
+        <img src="assets/businesscase.png" alt="Business Case PT SAG × TOGAF" />
+        <div class="lb-cap"><div class="tag">Juara 1 · Business Case</div><h3>PT SAG × TOGAF</h3><span class="go">Enterprise Architecture →</span></div>
+      </a>
+      <a class="lb-card reveal" href="https://twilight-hallway-chronicles.lovable.app" target="_blank" rel="noopener">
+        <img src="assets/photography.png" alt="Harmoni Mengepel di Sore Hari" />
+        <div class="lb-cap"><div class="tag">Juara 1 · Fotografi Asrama</div><h3>Harmoni Mengepel</h3><span class="go">Fotografi Naratif →</span></div>
+      </a>
     </div>
   </div>
 </section>
