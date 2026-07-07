@@ -283,8 +283,8 @@
   .hero-photo img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
   @keyframes blobFloat{0%,100%{border-radius:47% 53% 58% 42% / 52% 46% 54% 48%;transform:translateY(0)}
     50%{border-radius:53% 47% 42% 58% / 46% 54% 48% 52%;transform:translateY(-14px)}}
-  .hero-floats{position:absolute;bottom:2%;left:-6px;background:#fff;border:1px solid var(--line);
-    border-radius:16px;padding:13px 16px;box-shadow:0 24px 50px -24px rgba(20,40,90,.5);display:flex;flex-direction:column;gap:9px}
+  .hero-floats{position:absolute;bottom:-14px;left:-38px;background:#fff;border:1px solid var(--line);
+    border-radius:16px;padding:13px 16px;box-shadow:0 24px 50px -24px rgba(20,40,90,.5);display:flex;flex-direction:column;gap:9px;max-width:246px}
   .hero-floats .loc{font-size:13px;color:var(--muted);font-weight:600}
   .hero-floats .chips{margin:0;justify-content:flex-start;max-width:230px}
 
@@ -323,9 +323,19 @@
   .award-featured .award-link{color:var(--accent-2)}
 
   /* Album lookbook (keep dark image overlay) */
-  .lb-card{box-shadow:0 22px 46px -24px rgba(20,50,110,.5)}
+  .lb-card{border:2px solid rgba(37,99,235,.30);box-shadow:0 0 0 4px rgba(37,99,235,.06),0 22px 46px -24px rgba(20,50,110,.5)}
+  .lb-card:hover{border-color:var(--accent)}
   .lb-cap .tag{color:#7dd3fc}
   .lb-card .go{color:rgba(255,255,255,.9)}
+  /* Hilangkan hijau (GitHub/live) -> biru, + frame biru halus untuk gambar showcase */
+  .proj-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff}
+  .proj-btn.primary:hover{box-shadow:0 12px 26px -10px rgba(37,99,235,.55)}
+  .proj-thumb .live-dot{background:var(--accent)}
+  @keyframes livepulse{0%{box-shadow:0 0 0 0 rgba(37,99,235,.5)}70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  .proj-live{border-color:rgba(37,99,235,.3)}
+  .proj-thumb{border-bottom:2px solid rgba(37,99,235,.20)}
+  .award-featured .thumb{border-bottom:2px solid rgba(37,99,235,.20)}
+  .tl-photos img{border:2px solid rgba(37,99,235,.22)}
 
   /* Certs + skills */
   .cert-group{background:#fff;box-shadow:var(--shadow)}
