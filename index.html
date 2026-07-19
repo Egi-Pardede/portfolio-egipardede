@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="light">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="Portofolio pribadi Egi Agung Santoso Pardede — Mahasiswa Sistem Informasi Telkom University. IT Governance, System Analysis, dan Business–IT Alignment." />
 <title>Egi Agung Santoso Pardede — Portfolio</title>
+<script>
+  /* Terapkan tema sedini mungkin agar tidak ada kedipan saat halaman dimuat */
+  (function () {
+    try {
+      var t = localStorage.getItem('egi-theme');
+      if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -408,6 +418,84 @@
     .hero-shape,.scroll-ind{display:none}
     .to-top{bottom:16px;right:16px}
   }
+
+  /* ================= DARK MODE ================= */
+  .nav-inner{gap:12px}
+  .theme-btn{position:relative;overflow:hidden;display:grid;place-items:center;width:42px;height:42px;flex:none;
+    border-radius:12px;cursor:pointer;background:#fff;border:1px solid var(--line);color:var(--accent);
+    box-shadow:var(--shadow);transition:.25s}
+  .theme-btn:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .theme-btn svg{position:absolute;width:20px;height:20px;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .3s ease}
+  .ic-sun{opacity:0;transform:rotate(-90deg) scale(.4)}
+  .ic-moon{opacity:1;transform:none}
+  [data-theme="dark"] .ic-sun{opacity:1;transform:none}
+  [data-theme="dark"] .ic-moon{opacity:0;transform:rotate(90deg) scale(.4)}
+
+  html{color-scheme:light}
+  [data-theme="dark"]{
+    color-scheme:dark;
+    --bg:#0a1120;
+    --bg-soft:#111c31;
+    --card:#141f36;
+    --card-2:#1b2842;
+    --line:rgba(255,255,255,.10);
+    --text:#e9eff9;
+    --muted:#a2b3cd;
+    --muted-2:#74879f;
+    --accent:#60a5fa;
+    --accent-2:#38bdf8;
+    --accent-3:#2dd4bf;
+    --highlight:#fbbf24;
+    --glow:rgba(96,165,250,.18);
+    --shadow:0 18px 44px -24px rgba(0,0,0,.75);
+  }
+  [data-theme="dark"] body{background:
+    radial-gradient(58vw 58vw at 90% -12%, rgba(45,212,191,.10), transparent 60%),
+    radial-gradient(52vw 52vw at -10% 4%, rgba(96,165,250,.13), transparent 60%),
+    var(--bg);}
+  [data-theme="dark"] header.nav{background:rgba(10,17,32,.75)}
+  [data-theme="dark"] header.nav.scrolled{background:rgba(10,17,32,.93);box-shadow:0 10px 34px -20px rgba(0,0,0,.8)}
+  [data-theme="dark"] .nav-links.open{background:rgba(12,20,37,.98)}
+  [data-theme="dark"] .menu-btn,
+  [data-theme="dark"] .theme-btn,
+  [data-theme="dark"] .btn-ghost,
+  [data-theme="dark"] .hero-floats,
+  [data-theme="dark"] .focus,
+  [data-theme="dark"] .proj,
+  [data-theme="dark"] .proj-btn.ghost,
+  [data-theme="dark"] .award,
+  [data-theme="dark"] .award-featured,
+  [data-theme="dark"] .cert-group,
+  [data-theme="dark"] .skill-pill,
+  [data-theme="dark"] .lb-close,
+  [data-theme="dark"] .lb-nav{background:var(--card);color:var(--text)}
+  [data-theme="dark"] .hero-copy .badge{background:var(--card);color:var(--accent)}
+  [data-theme="dark"] .proj-thumb{background:#0e1729}
+  [data-theme="dark"] .tl-item::before{background:var(--bg)}
+  [data-theme="dark"] .chip{background:var(--card-2);color:var(--muted)}
+  [data-theme="dark"] .brand-logo{background:#fff;padding:2px}
+  [data-theme="dark"] .btn-primary,
+  [data-theme="dark"] .proj-btn.doc,
+  [data-theme="dark"] .proj-btn.primary,
+  [data-theme="dark"] .award .rank,
+  [data-theme="dark"] .brand .dot,
+  [data-theme="dark"] .to-top{color:#06121f}
+  [data-theme="dark"] .contact-card .btn-primary{background:#fff;color:#0d2a52}
+  [data-theme="dark"] .contact-card{box-shadow:0 44px 96px -42px rgba(0,0,0,.8)}
+  [data-theme="dark"] .lb{background:rgba(2,6,14,.9)}
+
+  /* Transisi warna halus saat ganti mode */
+  body,header.nav,.focus,.proj,.award,.award-featured,.cert-group,.skill-pill,.hero-floats,
+  .btn-ghost,.menu-btn,.theme-btn,.proj-thumb,.chip,.contact-card,.tl-item::before{
+    transition:background-color .5s ease,color .4s ease,border-color .4s ease,box-shadow .5s ease}
+
+  /* Animasi View Transition (circular reveal) */
+  ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+  ::view-transition-old(root){z-index:1}
+  ::view-transition-new(root){z-index:2}
+  /* Fallback: cross-fade foto hero */
+  .hero-photo img{transition:opacity .35s ease}
+  .hero-photo img.swapping{opacity:0}
 </style>
 </head>
 <body>
@@ -426,6 +514,10 @@
       <a href="#certs">Sertifikasi</a>
       <a href="#contact">Kontak</a>
     </nav>
+    <button class="theme-btn" id="themeBtn" aria-label="Ganti mode terang/gelap" title="Mode terang / gelap">
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.2 14.6A8.3 8.3 0 019.4 3.8a8.6 8.6 0 1010.8 10.8z"/></svg>
+    </button>
     <button class="menu-btn" id="menuBtn">☰ Menu</button>
   </div>
 </header>
@@ -450,7 +542,7 @@
       </div>
     </div>
     <div class="hero-visual reveal">
-      <div class="hero-photo"><img loading="lazy" decoding="async" src="assets/profile.png" alt="Egi Agung Santoso Pardede" /></div>
+      <div class="hero-photo"><img id="heroPhoto" decoding="async" fetchpriority="high" src="assets/photo-light.png" alt="Egi Agung Santoso Pardede" /></div>
       <div class="hero-floats">
         <span class="loc">📍 Bandung, Indonesia</span>
         <div class="chips">
@@ -856,6 +948,43 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // ---------- Mode Terang / Gelap ----------
+  const THEME_KEY = 'egi-theme';
+  const PHOTO = { light: 'assets/photo-light.png', dark: 'assets/photo-dark.png' };
+  const heroPhoto = document.getElementById('heroPhoto');
+  const themeBtn = document.getElementById('themeBtn');
+
+  function applyTheme(mode) {
+    document.documentElement.setAttribute('data-theme', mode);
+    if (heroPhoto && heroPhoto.getAttribute('src') !== PHOTO[mode]) heroPhoto.src = PHOTO[mode];
+    try { localStorage.setItem(THEME_KEY, mode); } catch (e) {}
+  }
+  // Selaraskan foto dengan tema yang sudah dipasang script di <head>
+  applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+
+  // Pramuat foto mode satunya supaya pergantian mulus
+  window.addEventListener('load', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const img = new Image(); img.src = cur === 'dark' ? PHOTO.light : PHOTO.dark;
+  });
+
+  themeBtn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    const swap = () => applyTheme(next);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!document.startViewTransition || reduce) { swap(); return; }
+    // Animasi: lingkaran menyebar dari tombol (View Transitions API)
+    const r = themeBtn.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    document.startViewTransition(swap).ready.then(() => {
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 620, easing: 'cubic-bezier(.4,0,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    });
+  });
 
   // Scroll progress bar + nav solid-on-scroll + back-to-top
   const progressBar = document.getElementById('scrollProgress');
