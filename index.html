@@ -509,19 +509,35 @@
   .ib.b3{width:240px;height:240px;background:radial-gradient(circle,#f59e0b,transparent 70%);top:55%;left:12%;opacity:.26;animation:introFloat 8s ease-in-out infinite}
   @keyframes introFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-30px)}}
   @keyframes introUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
-  .intro-inner{position:relative;text-align:center;max-width:840px}
-  .intro-logo{width:62px;height:auto;border-radius:14px;margin:0 auto 22px;display:block;background:#fff;padding:3px;
+  .intro-inner{position:relative;text-align:center;max-width:900px}
+  .intro-logo{width:62px;height:auto;border-radius:14px;margin:0 auto 26px;display:block;background:#fff;padding:3px;
     opacity:0;animation:introUp .8s cubic-bezier(.2,.7,.2,1) .1s forwards}
-  .intro-hi{color:#93b4e8;font-size:clamp(.95rem,2.2vw,1.15rem);font-weight:600;
-    opacity:0;animation:introUp .8s cubic-bezier(.2,.7,.2,1) .35s forwards}
-  .intro-name{font-family:'Sora';font-weight:800;line-height:1.03;margin:8px 0 14px;
-    font-size:clamp(2.1rem,7.5vw,4.8rem)}
-  .intro-name span{display:block;opacity:0;background:linear-gradient(115deg,#60a5fa,#38bdf8 55%,#2dd4bf);
+  /* Kalimat yang muncul kata demi kata (tiap kata = .iw, dipicu lewat JS) */
+  .iw{display:inline-block;opacity:0;filter:blur(14px);transform:translateY(26px) scale(.94);
+    transition:opacity .8s cubic-bezier(.2,.7,.2,1),filter .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);
+    will-change:opacity,transform,filter}
+  .iw.on{opacity:1;filter:blur(0);transform:none}
+  .intro-lead{color:#93b4e8;font-weight:600;letter-spacing:.02em;margin:0;
+    font-size:clamp(1rem,2.8vw,1.55rem)}
+  .intro-name{font-family:'Sora';font-weight:800;line-height:1.1;margin:.16em 0 0;
+    font-size:clamp(2rem,6.8vw,4.4rem)}
+  .intro-name .iw{background:linear-gradient(115deg,#60a5fa,#38bdf8 55%,#2dd4bf);
     -webkit-background-clip:text;background-clip:text;color:transparent}
-  .intro-name .ln1{animation:introUp .9s cubic-bezier(.2,.7,.2,1) .55s forwards}
-  .intro-name .ln2{animation:introUp .9s cubic-bezier(.2,.7,.2,1) .78s forwards}
-  .intro-sub{color:#8fa6c6;font-size:clamp(.8rem,2vw,.98rem);letter-spacing:.04em;
-    opacity:0;animation:introUp .8s cubic-bezier(.2,.7,.2,1) 1s forwards}
+  .intro-sub{color:#8fa6c6;font-size:clamp(.8rem,2vw,.98rem);letter-spacing:.04em;margin:22px 0 0;
+    opacity:0;transition:opacity 1s ease}
+  .intro.done .intro-sub{opacity:1}
+  /* Kilat halus saat kata terakhir mendarat */
+  .intro-flash{position:absolute;inset:0;pointer-events:none;opacity:0;
+    background:radial-gradient(circle at 50% 52%,rgba(125,211,252,.5),transparent 62%)}
+  .intro.climax .intro-flash{animation:introFlash 1.2s ease-out}
+  @keyframes introFlash{0%{opacity:0}14%{opacity:1}100%{opacity:0}}
+  .intro.playing .intro-enter,.intro.playing .intro-hint{opacity:0;transform:translateY(12px);
+    pointer-events:none;transition:opacity .45s ease,transform .45s ease}
+  .intro-skip{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:2;
+    background:none;border:none;color:#6b83a6;font-family:'Inter';font-size:12.5px;letter-spacing:.05em;
+    cursor:pointer;opacity:0;pointer-events:none;transition:opacity .6s ease .4s,color .25s}
+  .intro-skip:hover{color:#cfe3ff}
+  .intro.playing .intro-skip{opacity:1;pointer-events:auto}
   .intro-enter{margin-top:30px;display:inline-flex;align-items:center;gap:10px;cursor:pointer;
     padding:14px 30px;border-radius:999px;border:none;font-family:'Inter';font-size:15px;font-weight:700;color:#06121f;
     background:linear-gradient(135deg,#60a5fa,#2dd4bf);box-shadow:0 18px 40px -16px rgba(56,189,248,.6);
@@ -544,20 +560,20 @@
 <!-- INTRO / SPLASH -->
 <div class="intro" id="intro" role="dialog" aria-label="Pembuka">
   <div class="intro-bg" aria-hidden="true"><span class="ib b1"></span><span class="ib b2"></span><span class="ib b3"></span></div>
+  <div class="intro-flash" aria-hidden="true"></div>
   <div class="intro-inner">
     <img class="intro-logo" src="assets/logo-mark.png" alt="" aria-hidden="true" />
-    <p class="intro-hi">Halo, saya</p>
-    <h1 class="intro-name"><span class="ln1">Egi Agung</span><span class="ln2">Santoso Pardede</span></h1>
+    <p class="intro-lead"><span class="iw">Halo,</span> <span class="iw">saya</span></p>
+    <h1 class="intro-name"><span class="iw">Egi</span> <span class="iw">Agung</span> <span class="iw">Santoso</span> <span class="iw">Pardede.</span></h1>
     <p class="intro-sub">IT Governance · System Analysis · Business–IT Alignment</p>
     <button class="intro-enter" id="introEnter">
-      <span>Masuk</span>
+      <span>Mulai</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
     </button>
-    <p class="intro-hint">klik untuk masuk &amp; menyalakan musik</p>
+    <p class="intro-hint">klik untuk memulai dengan musik</p>
   </div>
+  <button class="intro-skip" id="introSkip">lewati</button>
 </div>
-
-<audio id="bgm" loop preload="none" src="assets/bgm.mp3"></audio>
 <div class="scroll-progress" id="scrollProgress"></div>
 <div class="bg-orbs"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
 
@@ -1049,58 +1065,259 @@
     });
   });
 
-  // ---------- Intro / Splash + Musik latar ----------
+  // ---------- Intro sinematik + musik latar ----------
+  // Seluruh bunyi di bawah ini dibangkitkan dari osilator & noise buffer Web Audio.
+  // Tidak ada sampel/rekaman pihak ketiga -> 100% original, bebas copyright.
   const intro = document.getElementById('intro');
   const introEnter = document.getElementById('introEnter');
-  const bgm = document.getElementById('bgm');
+  const introSkip = document.getElementById('introSkip');
   const soundBtn = document.getElementById('soundBtn');
+  const introWords = intro ? Array.from(intro.querySelectorAll('.iw')) : [];
   const SOUND_KEY = 'egi-sound', INTRO_KEY = 'egi-intro-seen';
-  let introDone = false, fadeTimer = null;
+  const lessMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let introDone = false;
 
-  function setSound(on) {
-    soundBtn.classList.toggle('on', on);
-    try { localStorage.setItem(SOUND_KEY, on ? '1' : '0'); } catch (e) {}
-    clearInterval(fadeTimer);
-    if (on) {
-      bgm.volume = 0;
-      bgm.play().then(() => {                    // fade-in lembut agar tidak mengagetkan
-        let v = 0; const target = 0.32;
-        fadeTimer = setInterval(() => { v = Math.min(target, v + 0.02); bgm.volume = v; if (v >= target) clearInterval(fadeTimer); }, 60);
-      }).catch(() => soundBtn.classList.remove('on'));
-    } else {
-      let v = bgm.volume;                        // fade-out lalu berhenti
-      fadeTimer = setInterval(() => { v = Math.max(0, v - 0.04); bgm.volume = v; if (v <= 0) { clearInterval(fadeTimer); bgm.pause(); } }, 50);
+  const Music = (() => {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    // Am(add9) -> F -> G -> Em : progresi tenang untuk latar yang elegan & minimalis
+    const CHORDS = [
+      [220.00, 329.63, 415.30, 493.88],
+      [174.61, 261.63, 349.23, 440.00],
+      [196.00, 293.66, 392.00, 493.88],
+      [164.81, 246.94, 329.63, 415.30]
+    ];
+    let ctx = null, master = null, bus = null, drone = null, noise = null;
+    let padTimer = null, chordStep = 0, on = false;
+
+    const t0 = () => ctx.currentTime;
+
+    function noiseBuffer() {                       // dipakai ulang untuk riser & transien
+      if (noise) return noise;
+      const len = ctx.sampleRate * 3;
+      noise = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = noise.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      return noise;
     }
-  }
+    function impulse(sec, decay) {                 // reverb: noise yang meluruh
+      const len = (ctx.sampleRate * sec) | 0;
+      const buf = ctx.createBuffer(2, len, ctx.sampleRate);
+      for (let ch = 0; ch < 2; ch++) {
+        const d = buf.getChannelData(ch);
+        for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+      }
+      return buf;
+    }
+    function init() {
+      if (ctx || !AC) return ctx;
+      ctx = new AC();
+      master = ctx.createGain(); master.gain.value = 0.0001; master.connect(ctx.destination);
+      bus = ctx.createGain(); bus.connect(master);
+      const rev = ctx.createConvolver(); rev.buffer = impulse(3.4, 2.6);
+      const wet = ctx.createGain(); wet.gain.value = 0.5;
+      bus.connect(rev); rev.connect(wet); wet.connect(master);
+      return ctx;
+    }
+    function fadeMaster(to, sec) {
+      const t = t0();
+      master.gain.cancelScheduledValues(t);
+      master.gain.setValueAtTime(Math.max(master.gain.value, 0.0001), t);
+      master.gain.exponentialRampToValueAtTime(Math.max(to, 0.0001), t + sec);
+    }
 
-  function closeIntro(withSound) {
+    function bell(freq, t, peak, dur) {            // aksen tiap kata: nada lonceng lembut
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t + 0.014);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      g.connect(bus);
+      [[1, 1], [2.01, 0.32], [3.03, 0.12]].forEach(([mult, amp]) => {
+        const o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = freq * mult;
+        const og = ctx.createGain(); og.gain.value = amp;
+        o.connect(og); og.connect(g); o.start(t); o.stop(t + dur + 0.05);
+      });
+    }
+    function boom(t, peak) {                       // hentakan bass sinematik
+      const o = ctx.createOscillator(); o.type = 'sine';
+      o.frequency.setValueAtTime(110, t);
+      o.frequency.exponentialRampToValueAtTime(38, t + 0.9);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 1.1);
+      o.connect(g); g.connect(bus); o.start(t); o.stop(t + 1.2);
+    }
+    function air(t, dur, peak, f0, f1) {           // sapuan noise (riser / desis)
+      const src = ctx.createBufferSource(); src.buffer = noiseBuffer(); src.loop = true;
+      const bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.1;
+      bp.frequency.setValueAtTime(f0, t);
+      bp.frequency.exponentialRampToValueAtTime(f1, t + dur);
+      const g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(peak, t + dur * 0.82);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      src.connect(bp); bp.connect(g); g.connect(bus);
+      src.start(t); src.stop(t + dur + 0.05);
+    }
+    function pad(t, notes) {                       // lapisan chord latar, attack panjang
+      notes.forEach((f, i) => {
+        const o = ctx.createOscillator(); o.type = i < 2 ? 'triangle' : 'sine'; o.frequency.value = f;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.038, t + 2.4);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 7.6);
+        const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1500;
+        o.connect(g); g.connect(lp); lp.connect(bus); o.start(t); o.stop(t + 7.9);
+      });
+      bell(notes[3] * 2, t + 1.6, 0.045, 3.4);     // satu nada tipis, sengaja jarang
+    }
+
+    function openerStart() {                       // drone megah + riser pembangun tensi
+      const t = t0() + 0.05;
+      drone = ctx.createGain();
+      drone.gain.setValueAtTime(0.0001, t);
+      drone.gain.exponentialRampToValueAtTime(0.34, t + 2.6);
+      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass';
+      lp.frequency.setValueAtTime(160, t);
+      lp.frequency.linearRampToValueAtTime(1100, t + 6);
+      drone.connect(lp); lp.connect(bus);
+      [[55, 'sawtooth', 0.26], [55.4, 'sawtooth', 0.26], [110, 'triangle', 0.15], [164.81, 'triangle', 0.07]]
+        .forEach(([f, type, amp]) => {
+          const o = ctx.createOscillator(); o.type = type; o.frequency.value = f;
+          const g = ctx.createGain(); g.gain.value = amp;
+          o.connect(g); g.connect(drone); o.start(t); o.stop(t + 16);
+        });
+      air(t, 5.6, 0.11, 240, 5200);
+    }
+    function padLoop(at) {
+      if (padTimer) return;
+      pad(at, CHORDS[0]); chordStep = 1;
+      padTimer = setInterval(() => { pad(t0() + 0.1, CHORDS[chordStep++ % CHORDS.length]); }, 7000);
+    }
+
+    return {
+      supported: !!AC,
+      isOn: () => on,
+      begin() {                                    // dipanggil dari klik "Mulai"
+        if (!AC) return;
+        init(); ctx.resume();
+        on = true; fadeMaster(0.85, 0.8);
+        openerStart();
+      },
+      accent(freq) { if (ctx && on) { const t = t0() + 0.02; bell(freq, t, 0.34, 2.4); boom(t, 0.22); } },
+      climax() {                                   // kata terakhir: hentakan besar
+        if (!ctx || !on) return;
+        const t = t0() + 0.02;
+        bell(659.25, t, 0.4, 3.6); bell(880, t + 0.02, 0.22, 3.6);
+        boom(t, 0.55); air(t, 1.6, 0.14, 6000, 700);
+      },
+      toAmbient() {                                // crossfade halus ke latar minimalis
+        if (!ctx || !on) return;
+        const t = t0();
+        if (drone) {
+          drone.gain.cancelScheduledValues(t);
+          drone.gain.setValueAtTime(Math.max(drone.gain.value, 0.0001), t);
+          drone.gain.exponentialRampToValueAtTime(0.0001, t + 2.6);
+          drone = null;
+        }
+        padLoop(t + 1.4);
+      },
+      ambientOnly() {                              // kunjungan ulang: langsung ke latar
+        if (!AC) return;
+        init(); ctx.resume();
+        on = true; fadeMaster(0.85, 1.2);
+        padLoop(t0() + 0.1);
+      },
+      mute() {                                     // fade-out lalu berhenti menjadwal chord
+        if (!ctx) return;
+        on = false; fadeMaster(0.0001, 0.6);
+        clearInterval(padTimer); padTimer = null;
+      }
+    };
+  })();
+
+  function setSound(want) {
+    const ok = Music.supported;
+    if (want && ok) { Music.isOn() ? null : Music.ambientOnly(); }
+    else if (!want) Music.mute();
+    soundBtn.classList.toggle('on', want && ok);
+    try { localStorage.setItem(SOUND_KEY, want && ok ? '1' : '0'); } catch (e) {}
+  }
+  if (!Music.supported) soundBtn.style.display = 'none';
+
+  function closeIntro() {
     if (introDone) return;
     introDone = true;
     intro.classList.add('leaving');
     document.body.classList.remove('intro-open');
     try { sessionStorage.setItem(INTRO_KEY, '1'); } catch (e) {}
-    if (withSound) setSound(true);
     setTimeout(() => intro.remove(), 1000);
   }
 
-  // Sembunyikan kontrol musik bila file belum tersedia (otomatis aktif lagi setelah bgm.mp3 ditaruh)
-  function disableMusicUI() {
-    soundBtn.style.display = 'none';
-    const hint = document.querySelector('.intro-hint');
-    if (hint) hint.textContent = 'klik untuk masuk';
+  // Urutan kemunculan kata + aksen nada yang menanjak (E4 G4 A4 C5 D5 -> puncak E5)
+  const NOTES = [329.63, 392.00, 440.00, 523.25, 587.33];
+  const LEAD_MS = 1400, WORD_MS = 760, HOLD_MS = 2000;
+  let wordTimers = [];
+
+  function revealAll() {
+    wordTimers.forEach(clearTimeout); wordTimers = [];
+    introWords.forEach(w => w.classList.add('on'));
+    intro.classList.add('done');
   }
-  bgm.addEventListener('error', disableMusicUI);
-  fetch('assets/bgm.mp3', { method: 'HEAD' }).then(r => { if (!r.ok) disableMusicUI(); }).catch(disableMusicUI);
+  function playIntro(withSound) {
+    intro.classList.add('playing');
+    if (withSound) {
+      Music.begin();
+      soundBtn.classList.add('on');
+      try { localStorage.setItem(SOUND_KEY, '1'); } catch (e) {}
+    }
+    if (lessMotion) {                              // hormati preferensi gerak minimal
+      revealAll();
+      wordTimers.push(setTimeout(() => { Music.toAmbient(); closeIntro(); }, 1800));
+      return;
+    }
+    introWords.forEach((w, i) => {
+      wordTimers.push(setTimeout(() => {
+        w.classList.add('on');
+        if (i === introWords.length - 1) {         // "Pardede." -> puncak
+          intro.classList.add('climax', 'done');
+          Music.climax();
+        } else {
+          Music.accent(NOTES[i] || 440);
+        }
+      }, LEAD_MS + i * WORD_MS));
+    });
+    wordTimers.push(setTimeout(() => {
+      Music.toAmbient();
+      closeIntro();
+    }, LEAD_MS + introWords.length * WORD_MS + HOLD_MS));
+  }
+  function skipIntro() {
+    revealAll();
+    Music.toAmbient();
+    closeIntro();
+  }
 
   const introSeen = (() => { try { return sessionStorage.getItem(INTRO_KEY); } catch (e) { return null; } })();
   if (introSeen) {
     intro.remove(); introDone = true;
+    // Preferensi musik tersimpan: browser baru mengizinkan audio setelah ada interaksi
+    if (Music.supported) {
+      let pref = null; try { pref = localStorage.getItem(SOUND_KEY); } catch (e) {}
+      if (pref === '1') {
+        soundBtn.classList.add('on');
+        const wake = () => { if (!Music.isOn()) Music.ambientOnly(); };
+        document.addEventListener('pointerdown', wake, { once: true });
+        document.addEventListener('keydown', wake, { once: true });
+      }
+    }
   } else {
     document.body.classList.add('intro-open');
-    introEnter.addEventListener('click', () => closeIntro(true));
-    intro.addEventListener('click', (e) => { if (e.target === intro) closeIntro(false); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeIntro(false); });
-    setTimeout(() => closeIntro(false), 7000);   // tutup sendiri bila didiamkan
+    introEnter.addEventListener('click', () => playIntro(true));
+    introSkip.addEventListener('click', skipIntro);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !introDone) skipIntro(); });
+    // Tanpa klik dalam 12 detik: tetap tampilkan kalimatnya, tanpa musik (autoplay diblokir browser)
+    setTimeout(() => { if (!intro.classList.contains('playing') && !introDone) playIntro(false); }, 12000);
   }
 
   soundBtn.addEventListener('click', () => setSound(!soundBtn.classList.contains('on')));
