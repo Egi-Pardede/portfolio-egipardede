@@ -510,8 +510,25 @@
   @keyframes introFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(24px,-30px)}}
   @keyframes introUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
   .intro-inner{position:relative;text-align:center;max-width:900px}
-  .intro-logo{width:62px;height:auto;border-radius:14px;margin:0 auto 26px;display:block;background:#fff;padding:3px;
+  .intro-logo-wrap{position:relative;display:inline-block;margin:0 auto 26px;
     opacity:0;animation:introUp .8s cubic-bezier(.2,.7,.2,1) .1s forwards}
+  .intro-logo{width:62px;height:auto;border-radius:14px;display:block;background:#fff;padding:3px;position:relative;z-index:1}
+  /* Kilau logo saat "ting" penutup */
+  .intro-logo-wrap .glow{position:absolute;inset:-20px;border-radius:50%;pointer-events:none;opacity:0;
+    background:radial-gradient(circle,rgba(186,230,253,.95),rgba(56,189,248,.32) 45%,transparent 70%)}
+  .intro-logo-wrap .streak{position:absolute;inset:0;border-radius:14px;overflow:hidden;pointer-events:none;z-index:2;opacity:0}
+  .intro-logo-wrap .streak::before{content:'';position:absolute;top:-60%;left:-130%;width:55%;height:220%;
+    transform:rotate(18deg);background:linear-gradient(100deg,transparent,rgba(255,255,255,.92),transparent)}
+  .intro.ting .intro-logo{animation:logoPulse 1.5s cubic-bezier(.2,.7,.2,1)}
+  .intro.ting .intro-logo-wrap .glow{animation:logoGlow 1.5s cubic-bezier(.2,.7,.2,1)}
+  .intro.ting .intro-logo-wrap .streak{animation:streakOn 1.1s ease-out}
+  .intro.ting .intro-logo-wrap .streak::before{animation:streakSweep 1.1s cubic-bezier(.3,.6,.2,1)}
+  @keyframes logoPulse{0%{filter:brightness(1) drop-shadow(0 0 0 rgba(125,211,252,0))}
+    16%{filter:brightness(1.35) drop-shadow(0 0 26px rgba(125,211,252,.95))}
+    100%{filter:brightness(1) drop-shadow(0 0 0 rgba(125,211,252,0))}}
+  @keyframes logoGlow{0%{opacity:0;transform:scale(.55)}18%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.55)}}
+  @keyframes streakOn{0%,100%{opacity:0}10%,80%{opacity:1}}
+  @keyframes streakSweep{0%{left:-130%}100%{left:150%}}
   /* Kalimat yang muncul kata demi kata (tiap kata = .iw, dipicu lewat JS) */
   .iw{display:inline-block;opacity:0;filter:blur(14px);transform:translateY(26px) scale(.94);
     transition:opacity .8s cubic-bezier(.2,.7,.2,1),filter .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1);
@@ -546,7 +563,11 @@
   .intro-enter svg{width:18px;height:18px}
   .intro-hint{margin-top:14px;color:#6b83a6;font-size:12.5px;opacity:0;animation:introUp .8s ease 1.5s forwards}
   body.intro-open{overflow:hidden}
-  @media (prefers-reduced-motion: reduce){ .intro *{animation:none !important;opacity:1 !important;transform:none !important} }
+  @media (prefers-reduced-motion: reduce){
+    .intro .intro-inner *{animation:none !important;opacity:1 !important;transform:none !important}
+    /* lapisan efek murni dekoratif: sembunyikan, jangan dipaksa tampil */
+    .intro-flash,.intro-logo-wrap .glow,.intro-logo-wrap .streak{display:none !important}
+  }
 
   /* Tombol musik */
   .sound-btn .ic-off{opacity:1;transform:none}
@@ -562,7 +583,10 @@
   <div class="intro-bg" aria-hidden="true"><span class="ib b1"></span><span class="ib b2"></span><span class="ib b3"></span></div>
   <div class="intro-flash" aria-hidden="true"></div>
   <div class="intro-inner">
-    <img class="intro-logo" src="assets/logo-mark.png" alt="" aria-hidden="true" />
+    <span class="intro-logo-wrap" aria-hidden="true">
+      <img class="intro-logo" src="assets/logo-mark.png" alt="" />
+      <span class="glow"></span><span class="streak"></span>
+    </span>
     <p class="intro-lead"><span class="iw">Halo,</span> <span class="iw">saya</span></p>
     <h1 class="intro-name"><span class="iw">Egi</span> <span class="iw">Agung</span> <span class="iw">Santoso</span> <span class="iw">Pardede.</span></h1>
     <p class="intro-sub">IT Governance · System Analysis · Business–IT Alignment</p>
@@ -1211,6 +1235,14 @@
         bell(659.25, t, 0.4, 3.6); bell(880, t + 0.02, 0.22, 3.6);
         boom(t, 0.55); air(t, 1.6, 0.14, 6000, 700);
       },
+      ting() {                                     // "ting" penutup: oktaf di atas puncak, terang & berkilau
+        if (!ctx || !on) return;
+        const t = t0() + 0.02;
+        bell(1318.51, t, 0.26, 3.0);               // E6
+        bell(1975.53, t + 0.03, 0.15, 3.4);        // B6
+        bell(2637.02, t + 0.06, 0.07, 2.8);        // E7
+        air(t, 0.8, 0.045, 9000, 3200);            // kilau tipis mengikuti nada
+      },
       toAmbient() {                                // crossfade halus ke latar minimalis
         if (!ctx || !on) return;
         const t = t0();
@@ -1256,7 +1288,7 @@
 
   // Urutan kemunculan kata + aksen nada yang menanjak (E4 G4 A4 C5 D5 -> puncak E5)
   const NOTES = [329.63, 392.00, 440.00, 523.25, 587.33];
-  const LEAD_MS = 1400, WORD_MS = 760, HOLD_MS = 2000;
+  const LEAD_MS = 1400, WORD_MS = 760, TING_MS = 1100, HOLD_MS = 2300;
   let wordTimers = [];
 
   function revealAll() {
@@ -1273,7 +1305,8 @@
     }
     if (lessMotion) {                              // hormati preferensi gerak minimal
       revealAll();
-      wordTimers.push(setTimeout(() => { Music.toAmbient(); closeIntro(); }, 1800));
+      wordTimers.push(setTimeout(() => { intro.classList.add('ting'); Music.ting(); }, 700));
+      wordTimers.push(setTimeout(() => { Music.toAmbient(); closeIntro(); }, 2400));
       return;
     }
     introWords.forEach((w, i) => {
@@ -1287,6 +1320,11 @@
         }
       }, LEAD_MS + i * WORD_MS));
     });
+    // "ting" penutup + kilau logo, sesaat setelah kata terakhir mendarat
+    wordTimers.push(setTimeout(() => {
+      intro.classList.add('ting');
+      Music.ting();
+    }, LEAD_MS + (introWords.length - 1) * WORD_MS + TING_MS));
     wordTimers.push(setTimeout(() => {
       Music.toAmbient();
       closeIntro();
