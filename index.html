@@ -598,6 +598,58 @@
     .intro-flash,.intro-logo-wrap .glow,.intro-logo-wrap .streak{display:none !important}
   }
 
+  /* ================= VIDEO PERKENALAN ================= */
+  .vid-wrap{max-width:940px;margin:0 auto}
+  .vid-shell{position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;cursor:pointer;
+    background:linear-gradient(150deg,var(--card),var(--card-2));border:1px solid var(--line);
+    box-shadow:0 34px 70px -30px rgba(8,22,52,.55);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s,border-color .35s}
+  .vid-shell:hover{transform:translateY(-6px);border-color:var(--accent);
+    box-shadow:0 44px 90px -32px rgba(37,99,235,.55)}
+  .vid-shell:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+  .vid-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .6s cubic-bezier(.2,.7,.2,1),filter .45s}
+  .vid-shell:hover .vid-thumb{transform:scale(1.045);filter:brightness(.82)}
+  /* lapisan gelap + gradasi agar teks & tombol kontras */
+  .vid-veil{position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(to top,rgba(6,16,34,.78),rgba(6,16,34,.18) 52%,rgba(6,16,34,.35))}
+  .vid-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+    width:82px;height:82px;border:none;border-radius:50%;cursor:pointer;display:grid;place-items:center;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;
+    box-shadow:0 18px 44px -12px rgba(37,99,235,.75);transition:transform .35s cubic-bezier(.34,1.4,.5,1),box-shadow .35s}
+  .vid-play svg{width:30px;height:30px;margin-left:4px}
+  .vid-shell:hover .vid-play{transform:translate(-50%,-50%) scale(1.1)}
+  /* denyut halus supaya tombol play mengundang klik */
+  .vid-play::after{content:"";position:absolute;inset:-6px;border-radius:50%;
+    border:2px solid var(--accent-2);opacity:.7;animation:vidPulse 2.6s ease-out infinite}
+  @keyframes vidPulse{0%{transform:scale(.9);opacity:.7}70%{transform:scale(1.45);opacity:0}100%{opacity:0}}
+  .vid-meta{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:22px 26px;pointer-events:none;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .vid-meta strong{font-family:'Sora';font-size:clamp(1rem,2.4vw,1.22rem);color:#fff;font-weight:700;display:block}
+  .vid-meta span{font-size:13px;color:rgba(226,238,255,.82)}
+  .vid-dur{font-size:12.5px;font-weight:700;letter-spacing:.06em;color:#06121a;white-space:nowrap;
+    background:linear-gradient(135deg,var(--accent-2),var(--accent-3));padding:7px 13px;border-radius:999px}
+  .vid-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:22px;z-index:3}
+  /* setelah diputar, overlay disingkirkan */
+  .vid-shell.playing{cursor:default;transform:none}
+  .vid-shell.playing:hover{transform:none;box-shadow:0 34px 70px -30px rgba(8,22,52,.55);border-color:var(--line)}
+  .vid-shell.playing .vid-thumb,.vid-shell.playing .vid-veil,
+  .vid-shell.playing .vid-play,.vid-shell.playing .vid-meta{opacity:0;pointer-events:none;transition:opacity .4s ease}
+  .vid-note{margin-top:18px;text-align:center;font-size:13.5px;color:var(--muted-2)}
+  @media (max-width:640px){
+    .vid-shell{border-radius:16px}
+    .vid-shell iframe{border-radius:16px}
+    .vid-play{width:64px;height:64px}
+    .vid-play svg{width:24px;height:24px}
+    /* ruang sempit: sisakan judul saja agar tidak menabrak tombol play */
+    .vid-meta{padding:14px 16px}
+    .vid-meta > span > span,.vid-dur{display:none}
+    .vid-meta strong{font-size:.98rem}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .vid-play::after{animation:none}
+    .vid-shell,.vid-thumb,.vid-play{transition:none}
+  }
+
   /* Tombol musik — ring gelombang suara melingkar */
   .sound-btn .sw{position:static;width:24px;height:24px}
   .sound-btn .sw-bars{transform-origin:24px 24px;opacity:.55;transition:opacity .3s ease}
@@ -645,6 +697,7 @@
   <div class="nav-inner">
     <a href="#top" class="brand"><img src="assets/logo-mark.png" class="brand-logo" alt="Logo EP — Egi Pardede" /> Egi Pardede</a>
     <nav class="nav-links" id="navlinks">
+      <a href="#perkenalan">Perkenalan</a>
       <a href="#album">Album</a>
       <a href="#about">Tentang</a>
       <a href="#experience">Pengalaman</a>
@@ -706,6 +759,35 @@
     </div>
   </div>
   <a class="scroll-ind" href="#album" aria-label="Scroll ke bawah"><span class="mouse"></span>Scroll</a>
+</section>
+
+<!-- VIDEO PERKENALAN -->
+<section id="perkenalan" style="background:var(--bg-soft)">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker">Perkenalan</div>
+      <h2>Meet Egi Agung Santoso Pardede</h2>
+      <p>Video perkenalan profesional singkat — siapa saya, bidang yang saya tekuni,
+         dan bagaimana saya bekerja dalam tata kelola TI serta analisis sistem.</p>
+    </div>
+    <div class="vid-wrap reveal">
+      <div class="vid-shell" id="vidShell" role="button" tabindex="0"
+           aria-label="Putar video perkenalan Egi Agung Santoso Pardede">
+        <img class="vid-thumb" id="vidThumb" loading="lazy" decoding="async"
+             src="https://i.ytimg.com/vi/0AYm6vrdiXk/maxresdefault.jpg"
+             alt="Cuplikan video perkenalan Egi Agung Santoso Pardede" />
+        <span class="vid-veil" aria-hidden="true"></span>
+        <div class="vid-meta">
+          <span><strong>Introduction</strong><span>Perkenalan profesional · Egi Agung Santoso Pardede</span></span>
+          <span class="vid-dur">▶ Putar</span>
+        </div>
+        <button class="vid-play" id="vidPlay" aria-label="Putar video perkenalan">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.2v13.6a1 1 0 001.53.85l10.7-6.8a1 1 0 000-1.7L9.53 4.35A1 1 0 008 5.2z"/></svg>
+        </button>
+      </div>
+      <p class="vid-note">Video diputar langsung di halaman ini — tanpa membuka tab baru.</p>
+    </div>
+  </div>
 </section>
 
 <!-- ALBUM / LOOKBOOK -->
@@ -1407,6 +1489,40 @@
   }
 
   soundBtn.addEventListener('click', () => setSound(!soundBtn.classList.contains('on')));
+
+  // ---------- Video perkenalan (facade: iframe baru dimuat saat diklik) ----------
+  // Halaman tidak memuat skrip/iframe YouTube sampai pengunjung menekan play,
+  // jadi bobot awal halaman tetap ringan.
+  const vidShell = document.getElementById('vidShell');
+  if (vidShell) {
+    const VID_ID = '0AYm6vrdiXk';
+    const thumb = document.getElementById('vidThumb');
+    // maxresdefault tidak selalu tersedia -> YouTube membalas placeholder 120px
+    const thumbFallback = () => { thumb.src = 'https://i.ytimg.com/vi/' + VID_ID + '/hqdefault.jpg'; };
+    thumb.addEventListener('error', thumbFallback);
+    thumb.addEventListener('load', () => { if (thumb.naturalWidth <= 121) thumbFallback(); }, { once: true });
+
+    let playing = false;
+    const playVideo = () => {
+      if (playing) return;
+      playing = true;
+      const fr = document.createElement('iframe');
+      fr.src = 'https://www.youtube-nocookie.com/embed/' + VID_ID +
+               '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+      fr.title = 'Video perkenalan Egi Agung Santoso Pardede';
+      fr.loading = 'lazy';
+      fr.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      fr.allowFullscreen = true;
+      vidShell.appendChild(fr);
+      vidShell.classList.add('playing');
+      vidShell.removeAttribute('role');
+      vidShell.removeAttribute('tabindex');
+    };
+    vidShell.addEventListener('click', playVideo);
+    vidShell.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playVideo(); }
+    });
+  }
 
   // Scroll progress bar + nav solid-on-scroll + back-to-top
   const progressBar = document.getElementById('scrollProgress');
